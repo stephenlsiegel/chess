@@ -29,15 +29,33 @@ def find_legal_moves(start, moves):
 
 	return legal_moves
 
-paths = []
+def knight_paths(start, end):
+	# paths is a list of each path. A path is a list of square's coordinates, which is stored as the list [row, column].
+	paths = [[start]]
 
-terminate = False
+	counter = 1
+	terminate = False
+	while terminate == False:
 
-while terminate = False:
+		for path in paths:
+			
+			last_move = path[len(path)-1]
+			legal_moves = find_legal_moves(last_move, moves)
+			counter2 = 1
 
+			new_paths = []
+			for move in legal_moves:
+				new_path = list(path)
+				new_path.append(move)
+				
+				new_paths.append(new_path)
+
+		terminate = True
+	print new_paths
 	
 
 
-print(find_legal_moves(x, moves))
+# print find_legal_moves(x, moves)
+# print knight_paths(x,x)
 
-print(find_legal_moves([4,4], moves))
+knight_paths(x,x)
