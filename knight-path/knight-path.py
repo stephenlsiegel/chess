@@ -1,4 +1,5 @@
 x = [1,1]
+y = [8,8]
 
 m1 = [1,2]
 m2 = [2,1]
@@ -36,26 +37,75 @@ def knight_paths(start, end):
 	counter = 1
 	terminate = False
 	while terminate == False:
-
-		for path in paths:
-			
-			last_move = path[len(path)-1]
-			legal_moves = find_legal_moves(last_move, moves)
-			counter2 = 1
-
-			new_paths = []
-			for move in legal_moves:
-				new_path = list(path)
-				new_path.append(move)
+		
+		if counter==1: # what to do on first move
+		
+			for path in paths:
 				
-				new_paths.append(new_path)
+				last_move = path[len(path)-1]
+				#print "Last move was: ", last_move
+				legal_moves = find_legal_moves(last_move, moves)
+				#print "Legal moves are: ", legal_moves
 
-		terminate = True
-	print new_paths
+				if end in legal_moves:
+					terminate = True
+
+				new_paths = []
+				for move in legal_moves:
+					new_path = list(path)
+					new_path.append(move)
+					
+					new_paths.append(new_path)
+			paths = list(new_paths)
+
+			#print new_paths
+			#print terminate
+			#print counter
+			counter += 1
+			#print "There are now %d paths." % len(new_paths)
+		
+		else: # what to do on all other moves
+			
+			new_paths = []
+			
+			for path in paths:
+
+				two_moves_prior = path[len(path)-2]
+				#print "Two moves prior was: ", two_moves_prior
+				last_move = path[len(path)-1]
+				#print "Last move was: ", last_move
+				
+				legal_moves = find_legal_moves(last_move, moves)
+				legal_moves.remove(two_moves_prior)
+				#print "Legal moves are: ", legal_moves
+				if end in legal_moves:
+					terminate = True
+
+				for move in legal_moves:
+					new_path = list(path)
+					new_path.append(move)
+					
+					new_paths.append(new_path)
+			paths = list(new_paths)
+			
+			#print new_paths
+			#print terminate
+			#print counter
+			counter += 1
+			#print "There are now %d paths." % len(new_paths)
+			
+	accurate_paths = []
+	for path in new_paths:
+		if end in path:
+			accurate_paths.append(path)
+	output_list = [counter-1, accurate_paths]
+	return output_list
 	
 
 
 # print find_legal_moves(x, moves)
 # print knight_paths(x,x)
 
-knight_paths(x,x)
+print "It would take you %d moves to get there." % knight_paths(x,y)[0]
+print "Here is one possible route:", knight_paths(x,y)[1][1]
+	
